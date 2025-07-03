@@ -1,0 +1,25 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - master  # Trigger deploys when pushing to the 'master' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: npm install  # Run this if your project uses Node.js (not needed for static sites, can be skipped)
+
+    - name: Deploy to Netlify
+      run: |
+        curl -sL https://github.com/netlify/cli/releases/download/v3.0.0/netlify-cli-linux-x86_64.tar.gz | tar xz
+        sudo mv netlify /usr/local/bin
+        netlify deploy --dir=./ --prod --token ${{ secrets.NETLIFY_TOKEN }}
+      env:
+        NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}  # Netlify Token for authentication
