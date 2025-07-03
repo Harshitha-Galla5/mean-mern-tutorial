@@ -3,7 +3,7 @@ name: Deploy Website
 on:
   push:
     branches:
-      - master  # Trigger deploys when pushing to the 'master' branch
+      - main  # Trigger deploys when pushing to the 'main' branch
 
 jobs:
   deploy:
